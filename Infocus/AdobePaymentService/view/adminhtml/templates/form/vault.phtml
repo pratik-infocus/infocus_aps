@@ -1,0 +1,54 @@
+<?php
+/**
+ * Infocus
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Infocus-solution.com license that is
+ * available through the world-wide-web at this URL:
+ * https://infocus-solution.com/license.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @author Infocus Solutions
+ * @copyright Copyright (c) 2024 Infocus (https://infocus-solution.com)
+ * @package Partial Payment for Adobe Payment Service for Magento 2
+ */
+
+use Magento\Vault\Model\Ui\TokenUiComponentProviderInterface;
+
+/** @var \Magento\PaymentServicesPaypal\Block\Adminhtml\Form\AdminVault $block */
+$details = $block->getData(TokenUiComponentProviderInterface::COMPONENT_DETAILS);
+$publicHash = $block->getData(TokenUiComponentProviderInterface::COMPONENT_PUBLIC_HASH);
+$brand = $block->mapCardBrand($details['brand']);
+$icon = $block->getData('icons')[$brand];
+$id = $block->escapeHtml($block->getData('id'));
+?>
+<div data-mage-init='{
+        "Infocus_AdobePaymentService/js/vault": {
+            "container": "payment_<?= $block->escapeHtml($id) ?>",
+            "publicHash": "<?= $block->escapeHtml($publicHash); ?>",
+            "code": "<?= $block->escapeHtml($block->getData('code')); ?>",
+            "createOrderUrl":"<?= $block->escapeHtml($block->getData('createOrderUrl')) ?>"
+        }
+    }' id="payment_<?= $block->escapeHtml($id)?>" class="admin__field">
+    <input type="hidden" id="paypal-order-id" name="payment[paypal_order_id]" />
+    <input type="hidden" id="mp-order-id" name="payment[payments_order_id]" />
+    <input type="hidden" class="paypal-hash-id" name="paypal-hash" value="" />
+    <input type="hidden" name="active-public-hash" value="<?php echo  $publicHash; ?>"  />
+    <input type="hidden" name="is-admin-vault" value="1" />
+    <div class="admin__field-control control">
+        <input type="radio" id="token_switcher_<?= $block->escapeHtml($id) ?>" name="payment[token_switcher]"/>
+        <img src="<?= $block->escapeUrl($icon['url']); ?>"
+             width="<?= $block->escapeHtml($icon['width']); ?>"
+             height="<?= $block->escapeHtml($icon['height']); ?>"
+             class="payment-icon" >
+        <span><?= $block->escapeHtml(__('ending cards'));?></span>
+        <span><?= $block->escapeHtml($details['maskedCC']); ?></span>
+        (<span><?= $block->escapeHtml(__('expires'));?></span>:
+        <span><?= $block->escapeHtml($details['expirationDate']); ?></span>)
+    </div>
+</div>

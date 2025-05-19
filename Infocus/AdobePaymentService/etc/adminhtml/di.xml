@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Infocus
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Infocus-solution.com license that is
+ * available through the world-wide-web at this URL:
+ * https://infocus-solution.com/license.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @author Infocus Solutions
+ * @copyright Copyright (c) 2024 Infocus (https://infocus-solution.com)
+ * @package Partial Payment for Adobe Payment Service for Magento 2
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\PaymentServicesPaypal\Model\Ui\Adminhtml\TokenUiComponentProvider" type="Infocus\AdobePaymentService\Model\Ui\Adminhtml\TokenUiComponentProvider" />
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Invoice\Save" type="Infocus\AdobePaymentService\Controller\Adminhtml\Order\InvoiceSave" />
+    <preference for="Magento\PaymentServicesPaypal\Observer\SaveAdditionalData" type="Infocus\AdobePaymentService\Observer\Adminhtml\SaveAdditionalData" />
+</config>

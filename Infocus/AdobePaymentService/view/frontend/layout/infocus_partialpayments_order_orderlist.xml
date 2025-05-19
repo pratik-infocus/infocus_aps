@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Infocus
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Infocus-solution.com license that is
+ * available through the world-wide-web at this URL:
+ * https://infocus-solution.com/license.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @author Infocus Solutions
+ * @copyright Copyright (c) 2024 Infocus (https://infocus-solution.com)
+ * @package Partial Payment for Adobe Payment Service for Magento 2
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceBlock name="partially.paid.orders.list">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="partial-payments" xsi:type="array">
+                                <item name="children" xsi:type="array">
+                                    <item name="payment-form" xsi:type="array">
+                                        <item name="children" xsi:type="array">
+                                            <item name="billing-step" xsi:type="array">
+                                                <item name="component" xsi:type="string">uiComponent</item>
+                                                <item name="children" xsi:type="array">
+                                                    <item name="payment" xsi:type="array">
+                                                        <item name="children" xsi:type="array">
+                                                            <item name="renders" xsi:type="array">
+                                                                <!-- merge payment method renders here -->
+                                                                <item name="children" xsi:type="array">
+                                                                    <item name="payment_services" xsi:type="array">
+                                                                        <item name="component" xsi:type="string">Infocus_AdobePaymentService/js/view/payment/method-renderer</item>
+                                                                        <item name="methods" xsi:type="array">
+                                                                            <item name="payment_services_paypal_hosted_fields" xsi:type="array">
+                                                                                <item name="isBillingAddressRequired" xsi:type="boolean">false</item>
+                                                                            </item>
+                                                                            <item name="payment_services_paypal_smart_buttons" xsi:type="array">
+                                                                                <item name="isBillingAddressRequired" xsi:type="boolean">false</item>
+                                                                            </item>
+                                                                        </item>
+                                                                    </item>
+                                                                    <item name="vault" xsi:type="array">
+                                                                        <item name="component" xsi:type="string">Magento_Vault/js/view/payment/vault</item>
+                                                                        <item name="methods" xsi:type="array"/>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,65 @@
+<!--
+/**
+ * Infocus
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Infocus-solution.com license that is
+ * available through the world-wide-web at this URL:
+ * https://infocus-solution.com/license.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @author Infocus Solutions
+ * @copyright Copyright (c) 2024 Infocus (https://infocus-solution.com)
+ * @package Partial Payment for Adobe Payment Service for Magento 2
+ */
+-->
+<div class="payment-method" css="'_active': (getId() == isChecked())" id="payment-method-payment_services_paypal_vault">
+    <div class="payment-method-title field choice">
+        <input type="radio" disabled
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getId()}, value: getId(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()">
+        <label class="label" attr="'for': getCode()">
+            <img attr="{
+                'src': getIcons(getCardBrand()).url,
+                'width': getIcons(getCardBrand()).width,
+                'height': getIcons(getCardBrand()).height
+            }" class="payment-icon">
+            <span translate="'ending'"></span>
+            <span text="getMaskedCard()"></span>
+            <span data-bind="visible: getExpirationDate()">
+                <span class="expirybracket">(</span>
+                <span translate="'expires'"></span>
+                <span>:</span>
+                <span text="getExpirationDate()"></span>
+                <span class="expirybracket">)</span>
+            </span>
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit" disabled
+                        click="onPlaceOrder">
+                    <span translate="'Pay now'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

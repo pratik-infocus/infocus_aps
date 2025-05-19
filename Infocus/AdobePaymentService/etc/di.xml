@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Infocus
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Infocus-solution.com license that is
+ * available through the world-wide-web at this URL:
+ * https://infocus-solution.com/license.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @author Infocus Solutions
+ * @copyright Copyright (c) 2024 Infocus (https://infocus-solution.com)
+ * @package Partial Payment for Adobe Payment Service for Magento 2
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="PaymentServicesPaypalCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Infocus\AdobePaymentService\Gateway\Request\CaptureRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Infocus\PartialPayments\Model\Payment\MyAccount\MyAccountProcessor">
+        <arguments>
+            <argument name="paymentProcessors" xsi:type="array">
+                <item name="payment_services_paypal_vault" xsi:type="object">Infocus\AdobePaymentService\Processor\AdobeCardVault\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Sales\Model\Order\Payment\State\CaptureCommand" type="Infocus\AdobePaymentService\Model\Order\Payment\State\CaptureCommand" />
+    <type name="Magento\Vault\Model\Method\Vault">
+        <plugin name="aftercanpartial" type="Infocus\AdobePaymentService\Plugin\Vault"/>
+    </type>
+    <preference for="Magento\Sales\Model\ResourceModel\Order\Handler\State" type="Infocus\AdobePaymentService\Model\OrderState" />
+    <virtualType name="PaymentServicesPaypalAuthorizationAndCaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Infocus\AdobePaymentService\Gateway\Request\SavedAuthorizationAndCaptureRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="PaymentServicesPaypalAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Infocus\AdobePaymentService\Gateway\Request\AuthorizationRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <preference for="Magento\Sales\Model\Order\Payment\Operations\AuthorizeOperation" type="Infocus\AdobePaymentService\Model\Order\Payment\Operations\AuthorizeOperations" />
+    <preference for="Magento\PaymentServicesPaypal\Model\OrderService" type="Infocus\AdobePaymentService\Model\OrderService" />
+</config>
